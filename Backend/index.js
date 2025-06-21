@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import userRoute from "./routes/user.route.js";
 import messageRoute from "./routes/message.route.js";
 import { app, server } from "./SocketIO/server.js";
+import path from "path";
 
 dotenv.config();
 
@@ -18,6 +19,9 @@ app.use(cors());
 const PORT = process.env.PORT || 4001;
 const URI = process.env.MONGODB_URI;
 
+const _dirname = path.resolve();
+
+
 try {
   mongoose.connect(URI);
   console.log("Connected to MongoDB");
@@ -28,6 +32,11 @@ try {
 //routes
 app.use("/api/user", userRoute);
 app.use("/api/message", messageRoute);
+
+app.use(express.static(path.join(_dirname,"/Frontend/dist")))
+app.get('*', (_,res)=>{
+  res.sendFile(path.resolve(_dirname,"Frontend","dist","index.html"));
+})
 
 server.listen(PORT, () => {
   console.log(`Server is Running on port ${PORT}`);
