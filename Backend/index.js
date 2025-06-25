@@ -23,7 +23,7 @@ const _dirname = path.resolve();
 
 
 try {
-  mongoose.connect(URI);
+  mongoose.connect("mongodb+srv://yadavrishabh1410:12345@clusterofchat.ebkyqnk.mongodb.net/?retryWrites=true&w=majority&appName=ClusterOfChat")
   console.log("Connected to MongoDB");
 } catch (error) {
   console.log(error);
